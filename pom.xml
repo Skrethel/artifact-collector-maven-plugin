@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<groupId>com.github.skrethel</groupId>
+	<artifactId>artifact-collector-maven-plugin</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>maven-plugin</packaging>
+
+	<name>Artifact Collector Maven Plugin</name>
+	<description>Maven plugin for collecting specific artifacts from multi module maven project into single directory</description>
+
+	<scm>
+		<connection>scm:git@github.com:Skrethel/artifact-collector-maven-plugin.git</connection>
+		<developerConnection>scm:git@github.com:Skrethel/artifact-collector-maven-plugin.git</developerConnection>
+		<url>git@github.com:Skrethel/artifact-collector-maven-plugin.git</url>
+	</scm>
+
+	<url>https://github.com/Skrethel/artifact-collector-maven-plugin</url>
+	<licenses>
+		<license>
+			<name>MIT</name>
+			<url>https://github.com/Skrethel/artifact-collector-maven-plugin/raw/master/LICENSE</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>Skrethel</name>
+		<url>https://github.com/Skrethel</url>
+	</organization>
+
+	<issueManagement>
+		<system>GitHub Issues Manager</system>
+		<url>https://github.com/Skrethel/artifact-collector-maven-plugin/issues</url>
+	</issueManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>3.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>3.0.22</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-core</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<goalPrefix>artifact-collector</goalPrefix>
+					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+				</configuration>
+				<executions>
+					<execution>
+						<id>mojo-descriptor</id>
+						<goals>
+							<goal>descriptor</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>help-goal</id>
+						<goals>
+							<goal>helpmojo</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
