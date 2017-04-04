@@ -12,6 +12,8 @@ import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,11 +22,12 @@ import java.io.IOException;
 @Mojo(name = "collect", defaultPhase = LifecyclePhase.INSTALL, aggregator = true, requiresProject = true)
 public class ArtifactCollectorMojo extends AbstractMojo {
 
+	private static final String DEFAULT_PACKAGING = "rpm";
 	/**
-	 * Type of artifacts to collect.
+	 * Type of artifacts to collect. If not defined plugin will assume rpm packaging.
 	 */
-	@Parameter(defaultValue = "rpm", property = "targetPackaging", required = false)
-	private String targetPackaging;
+	@Parameter
+	private List<String> targetPackaging;
 
 	/**
 	 * Directory name where all collected artifacts will be put.
@@ -46,6 +49,14 @@ public class ArtifactCollectorMojo extends AbstractMojo {
 
 	public void execute() throws MojoExecutionException {
 		Log log = getLog();
+		List<String> packaging;
+		if (targetPackaging == null) {
+			packaging = new ArrayList<String>(1);
+			packaging.add(DEFAULT_PACKAGING);
+		} else {
+			packaging = targetPackaging;
+		}
+		log.info("Target packaging " + targetPackaging);
 		if (skip) {
 			log.debug("Skipping collection of artifacts");
 			return;
@@ -76,7 +87,7 @@ public class ArtifactCollectorMojo extends AbstractMojo {
 			outputDir = new File(parent.getBuild().getDirectory(), targetDirectoryName);
 			log.debug("Found parent " + parent.getName() + ", output dir: " + outputDir);
 		}
-		if (project.getPackaging().equals(targetPackaging)) {
+		if (packaging.contains(project.getPackaging())) {
 			log.debug("Found requested artifact for project " + project.getName());
 			try {
 				FileUtils.mkdir(outputDir.getCanonicalPath());

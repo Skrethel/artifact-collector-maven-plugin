@@ -9,7 +9,7 @@ Useful only with multi modules project - does nothing in single pom project.
 * target directory - place where collected files will be put. If path is absolute than plugin assumes that
   directory exists and is writable. If relative then it is relative to top level build directory.
   Default: collected-artifacts
-* target packaging - packaging type to collect. Examples: jar, war, rpm etc.
+* target packaging - list of packaging types to collect. Examples of types: jar, war, rpm etc.
   Default: rpm
 
 ## Usage
@@ -21,7 +21,13 @@ Example for binding plugin to install phase.
 <plugin>
 	<groupId>com.github.skrethel</groupId>
 	<artifactId>artifact-collector-maven-plugin</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.1-SNAPSHOT</version>
+	<configuration>
+		<targetPackaging>
+			<value>rpm</value>
+			<value>deb</value>
+		</targetPackaging>
+	</configuration>
 	<executions>
 		<execution>
 			<phase>install</phase>
